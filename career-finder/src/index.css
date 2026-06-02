@@ -1,9 +1,16 @@
-@import "tailwindcss";
+
 @import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+@import "tailwindcss";
 
 @theme {
   --font-judson: 'Judson', serif;
+   --font-luckiest-guy: 'Luckiest Guy', cursive;
+
+   --color-orange: #FF8904;
+   --color-bg_green: #ACD082;
 }
+
 
 body {
     background-color: #091801;
