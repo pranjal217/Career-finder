@@ -35,8 +35,8 @@ const About = () => {
       {/* Page hero */}
       <div className='relative'>
         <section className='min-h-[87vh]'>
-          <div  className='flex justify-center items-center '>
-          <h1 className='  text-center suppercase text-[#A1D800] font-judson font-bold text-7xl md:text-9xl '>
+          <div  className='flex justify-center items-center p-34 md:p-45  '>
+          <h1 className='  text-center uppercase text-[#A1D800] font-judson font-bold text-7xl md:text-9xl '>
             about us
           </h1>
           </div>
