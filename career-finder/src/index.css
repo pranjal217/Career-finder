@@ -1,0 +1,74 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-judson: 'Judson', serif;
+   --font-luckiest-guy: 'Luckiest Guy', cursive;
+
+   --color-orange: #FF8904;
+   --color-bg_green: #ACD082;
+}
+
+
+body {
+    background-color: #091801;
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+        linear-gradient(#167a1633 1px, transparent 1px),
+        linear-gradient(90deg, #167a1633 1px, transparent 1px);
+    background-size: 200px 200px, 50px 50px, 50px 50px;
+    background-attachment: fixed; /* ✅ stops bg from scrolling */
+}
+.checker-border {
+    background-image: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%);
+    background-size: 70px 80px;
+    opacity:70%;
+}
+
+.checker-border-faded {
+    background-image: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%);
+    background-size: 70px 80px;
+    opacity: 40%; /* inner column more faded */
+}
+.grid-bg {
+    background-color: #c6e9ab;
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise'/%3E%3CfeColorMatrix in='noise' type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23000000' opacity='1' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+        /* Original grid patterns */
+        /* url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a8c8be' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"), */
+        linear-gradient(#4a8c1c22 1px, transparent 1px),
+        linear-gradient(90deg, #00000022 1px, transparent 1px);
+    background-size: 400px 400px, 60px 60px, 60px 60px, 60px 60px;
+}
+
+/* grainy effect for cards home page */
+
+@layer utilities {
+.grainy {
+    position: relative;
+    overflow: hidden;
+}
+
+.grainy::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.7'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 0;
+}
+}
+
+
+/* Dark green grid */
+.dark-grid-bg {
+    background-color: #0a0a0a;
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+        linear-gradient(#1a4d1a33 1px, transparent 1px),
+        linear-gradient(90deg, #1a4d1a33 1px, transparent 1px);
+    background-size: 200px 200px, 50px 50px, 50px 50px;
+}
