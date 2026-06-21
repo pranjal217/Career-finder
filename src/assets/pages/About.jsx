@@ -36,7 +36,7 @@ const About = () => {
       <div className='relative'>
         <section className='min-h-[87vh]'>
           <div  className='flex justify-center items-center '>
-          <h1 className='  uppercase text-[#A1D800] font-luckiest-guy font-bold text-7xl md:text-9xl '>
+          <h1 className='  text-center suppercase text-[#A1D800] font-judson font-bold text-7xl md:text-9xl '>
             about us
           </h1>
           </div>
