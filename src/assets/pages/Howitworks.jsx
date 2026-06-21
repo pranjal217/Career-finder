@@ -37,11 +37,11 @@ const Howitworks = () => {
   }, []);
 
   const steps = [
-    { step: 'Step 1', title: 'Take the Quiz', desc: '"No wrong answers, just honest ones"', bg: 'bg-[#ED2929]', side: 'left', badge: 'bg-[#fdb928]' },
-    { step: 'Step 2', title: 'Tell Us Who You Are', desc: '"Strengths, vibes, dreams - all of it"', bg: 'bg-[#7ECC8F]', side: 'right', badge: 'bg-orange-400' },
-    { step: 'Step 3', title: 'Create Your Free Account', desc: '"Takes 30 sec and pays off for years"', bg: 'bg-[#A1D800]', side: 'left', badge: 'bg-[#E4DBB2]' },
-    { step: 'Step 4', title: "Get Your Career Blueprint", desc: '"Your dream path, courses and all served hot"', bg: 'bg-[#1447E6]', side: 'right', badge: 'bg-yellow-300' },
-    { step: 'Step 5', title: 'Share It, Own It', desc: '"Download it, share it, go get it!"', bg: 'bg-orange-400', side: 'left', badge: 'bg-[#1BFDF8]' },
+    { step: 'Step 1', title: 'Take the Quiz', desc: '"No wrong answers, just honest ones"', bg: 'bg-primary', side: 'left', badge: 'bg-[#fdb928]' },
+    { step: 'Step 2', title: 'Tell Us Who You Are', desc: '"Strengths, vibes, dreams - all of it"', bg: 'bg-primary', side: 'right', badge: 'bg-orange-400' },
+    { step: 'Step 3', title: 'Create Your Free Account', desc: '"Takes 30 sec and pays off for years"', bg: 'bg-primary', side: 'left', badge: 'bg-[#E4DBB2]' },
+    { step: 'Step 4', title: "Get Your Career Blueprint", desc: '"Your dream path, courses and all served hot"', bg: 'bg-primary', side: 'right', badge: 'bg-yellow-300' },
+    { step: 'Step 5', title: 'Share It, Own It', desc: '"Download it, share it, go get it!"', bg: 'bg-primary', side: 'left', badge: 'bg-[#1BFDF8]' },
   ];
 
   return (
@@ -151,7 +151,7 @@ const Howitworks = () => {
 
       {/* CTA */}
       <section className='py-16 px-8 text-center'>
-        <h2 className='text-[#A1D800]  font-Keania-one text-3xl md:text-7xl uppercase tracking-wider mb-8'>
+        <h2 className='text-primary  font-Keania-one text-3xl md:text-7xl uppercase tracking-wider mb-8'>
           Your Season Starts<br /> Now!
         </h2>
         <button

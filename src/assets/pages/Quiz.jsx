@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { quizQuestions } from '../../data/questions';
 import Result from '../components/Result.jsx';
+import { useNavigate } from 'react-router-dom';
+import {useAuth0} from "@auth0/auth0-react";
+
 
 export default function Quiz() {
+  const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [selectedOption, setSelectedOption] = useState(null);
@@ -14,6 +18,7 @@ export default function Quiz() {
     creator: 0,
     coach: 0,
   });
+
   const [isFinished, setIsFinished] = useState(false);
 
   const currentQuestion = quizQuestions[index];
@@ -37,11 +42,11 @@ export default function Quiz() {
       if (index < quizQuestions.length - 1) {
         setIndex(index + 1);
         setSelectedOption(null);
-      } else {
-        setIsFinished(true);
-      }
-    }, 220);
+      } 
+    }, 300);
   };
+
+
 
   const handlePrevious = () => {
     if (index > 0) {
@@ -50,38 +55,53 @@ export default function Quiz() {
     }
   };
 
-  const handleReset = () => {
-    setAnswers({});
-    setScores({ architect: 0, storyteller: 0, scientist: 0, hustler: 0, creator: 0, coach: 0 });
-    setIndex(0);
-    setIsFinished(false);
-    setSelectedOption(null);
-  };
+   useEffect(()=>{
+    if (isFinished) {
+      navigate('/result', {state:{scores,answers}});
 
-  if (isFinished) {
-    return <Result answers={answers} scores={scores} handleRestart={handleReset} />;
-  }
+    }
+  },[isFinished]);
 
   const setLabels = {
     1: 'YOUR PROFILE',
     2: 'KEY INTERESTS',
-    3: 'HOW YOU THINK',
-    4: 'WHAT YOU WANT',
+    3: 'HOW YOU THINK ?',
+    4: 'WHAT YOU WANT ?',
   };
   const setLabel = setLabels[currentQuestion.set] || `SET ${currentQuestion.set}`;
+  const cardColors = [
+   '#8AB149',
+  '#3b1f5e',
+  '#1a3d2b',
+  '#037F7E',
+  '#E1A731',
+  '#F67549',
+];
+const cardColor = cardColors[index % cardColors.length];
+
+const { isAuthenticated, loginWithRedirect } = useAuth0();
+
+  
+
+const HandleSeeResult = () => {
+  console.log('button clicked, isAuthenticated:', isAuthenticated);
+  if (!isAuthenticated) {
+    sessionStorage.setItem('quizScores', JSON.stringify(scores));
+    sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+    loginWithRedirect({ appState: { returnTo: '/result' } });
+  } else {
+    sessionStorage.setItem('quizScores', JSON.stringify(scores));
+    sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+    navigate('/result', { state: { scores, answers } });
+  }
+};
+  
+
 
   return (
-    <div className="min-h-screen relative flex flex-col justify-center items-center py-10 bg-[#0d1a0d] overflow-hidden">
-      {/* Background texture */}
-      <div className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 39px, #a3e635 39px, #a3e635 40px),
-            repeating-linear-gradient(90deg, transparent, transparent 39px, #a3e635 39px, #a3e635 40px)`
-        }}
-      />
-      {/* Glow blobs */}
-      <div className="absolute top-[-80px] left-[-80px] w-72 h-72 rounded-full bg-[#84cc16]/10 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-[-80px] right-[-80px] w-72 h-72 rounded-full bg-[#f97316]/10 blur-3xl pointer-events-none" />
+    <div className="min-h-screen relative flex flex-col justify-center items-center bg-[#0F2209] py-10 overflow-hidden">
+      
+      
 
       {/* checker borders */}
       <div className="checker-border absolute top-0 right-0 w-20 h-full z-10" />
@@ -89,55 +109,48 @@ export default function Quiz() {
       <div className="checker-border absolute top-0 left-0 w-20 h-full z-10" />
       <div className="checker-border-faded absolute top-0 left-0 w-40 h-full z-5 hidden md:block" />
 
+      
       {/* Main card */}
-      <div className="relative z-20 w-[92vw] md:w-[780px] flex flex-col gap-5">
+<div className="relative rounded-xl z-15 w-[94vw] md:w-[780px] bg-[#010200] border-black border-4 flex flex-col  gap-7 p-5 md:p-10">
+        <div className='absolute checker-green top-0 right-0 w-full h-7 
+           z-20'/>
+          <div className='absolute checker-green bottom-0 right-0 w-full h-7  z-20'/>
 
         {/* Top meta row */}
-        <div className="flex items-center justify-between px-1">
-          <span className="text-[10px] font-black tracking-[0.25em] text-[#84cc16] uppercase border border-[#84cc16]/30 px-3 py-1 rounded-full">
+      <div className="w-full flex items-center justify-between px-2 py-5">
+          <span className=" text-xs md:text-sm  tracking-[0.25em] text-[#84cc16] font-luckiest-guy p-auto ">
             {setLabel}
           </span>
-          <span className="text-[10px] font-bold tracking-widest text-[#f97316] uppercase">
-            {index + 1} <span className="text-[#84cc16]/40">/ {quizQuestions.length}</span>
+          <span className="text-xs md:text-sm font-bold tracking-widest text-accent uppercase">
+            {index + 1} <span className="text-primary">/ {quizQuestions.length}</span>
           </span>
         </div>
 
         {/* Progress bar */}
-        <div className="w-full h-[3px] bg-[#1a2e1a] rounded-full overflow-hidden">
+        <div className=" w-full h-[20px] bg-[#1a2e1a]  overflow-hidden">
           <div
-            className="h-full rounded-full transition-all duration-500"
+            className=" checker-progress h-[20px]  transition-all duration-800"
             style={{
               width: `${progressPercent}%`,
-              background: 'linear-gradient(90deg, #84cc16, #f97316)',
+             
             }}
           />
         </div>
 
         {/* Question card */}
+       
         <div
-          className="rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(145deg, #1a2e1a 0%, #0f1f0f 100%)',
-            border: '1.5px solid rgba(132,204,22,0.18)',
-          }}
-        >
-          {/* Corner accent */}
-          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#f97316]/5 blur-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-[#84cc16]/5 blur-2xl pointer-events-none" />
+          className=" w-full  rounded-2xl transition-all duration-102 group relative p-6 md:p-8  overflow-hidden"
+          style={{backgroundColor: cardColor}}>
+        
+          
 
-          {/* Question number pill */}
-          <div className="inline-flex items-center gap-2 mb-5">
-            <span
-              className="text-[11px] font-black tracking-widest px-3 py-1 rounded-full"
-              style={{ background: 'rgba(249,115,22,0.15)', color: '#f97316', border: '1px solid rgba(249,115,22,0.3)' }}
-            >
-              Q{index + 1}
-            </span>
-          </div>
+          
 
-          <h2 className="text-lg md:text-2xl font-black text-[#e8f5d0] leading-snug mb-7 tracking-tight">
+          <h2 className="text-lg md:text-3xl  font-black text-[#e8f5d0] leading-snug mb-7 tracking-tight">
             {currentQuestion.question}
           </h2>
+           </div>
 
           {/* Options */}
           <div className="space-y-3">
@@ -148,37 +161,25 @@ export default function Quiz() {
                 <button
                   key={idx}
                   onClick={() => handleSelectOption(val, option.weights || null)}
-                  className="w-full text-left px-5 py-4 rounded-xl transition-all duration-200 group relative overflow-hidden"
-                  style={{
-                    background: isSelected
-                      ? 'linear-gradient(90deg, rgba(132,204,22,0.22), rgba(249,115,22,0.12))'
-                      : 'rgba(255,255,255,0.04)',
-                    border: isSelected
-                      ? '1.5px solid rgba(132,204,22,0.55)'
-                      : '1.5px solid rgba(255,255,255,0.08)',
-                    transform: isSelected ? 'translateX(4px)' : 'translateX(0)',
-                    boxShadow: isSelected ? '0 0 18px rgba(132,204,22,0.12)' : 'none',
-                  }}
+                  className={` w-full text-left px-5 py-4  border-black border-1
+                  shadow-[5px_5px_0_2px_rgba(0,0,0,1)] relative hover:bg-white/10  transition-all duration-200
+                  ${isSelected 
+                    ? 'bg-[#0f2a0a] border-[#84ff4d] translate-x-[5px] translate-y-[5px] hover:text-green-700 shadow-none'
+                  : 'bg-[#081505] border-[#1e3a10] text-[#a0c878] shadow-[7px_5px_0_] hover:border-[#84ff4d]  hover:-translate-y-[2px] hover:shadow-[5px_7px_0_#FDD517]'
+                      }
+                  `}
                 >
-                  {/* Left accent bar */}
-                  <div
-                    className="absolute left-0 top-0 h-full w-[3px] rounded-l-xl transition-all duration-200"
-                    style={{
-                      background: isSelected
-                        ? 'linear-gradient(180deg, #84cc16, #f97316)'
-                        : 'transparent',
-                    }}
-                  />
+                  
                   <div className="flex items-start gap-3 pl-2">
                     <span
                       className="mt-[2px] flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-black transition-all duration-200"
                       style={{
-                        borderColor: isSelected ? '#84cc16' : 'rgba(255,255,255,0.18)',
+                        borderColor: isSelected ? '#84cc16' : '#84cc16',
                         background: isSelected ? '#84cc16' : 'transparent',
-                        color: isSelected ? '#0d1a0d' : 'rgba(255,255,255,0.3)',
+                        color: isSelected ? '#0d1a0d' : '#84cc16',
                       }}
                     >
-                      {isSelected ? '✓' : String.fromCharCode(65 + idx)}
+                      {isSelected ? '✓' : ''}
                     </span>
                     <span
                       className="text-sm md:text-[15px] font-medium leading-relaxed transition-colors duration-200"
@@ -188,27 +189,39 @@ export default function Quiz() {
                     </span>
                   </div>
                 </button>
+
               );
             })}
           </div>
+          
 
           {/* Bottom nav */}
+         
           {index > 0 && (
-            <div className="mt-6 pt-5 border-t border-[#84cc16]/10 flex justify-start">
+            <div className="mt-6 mb-8 pt-5 border border-[#84cc16]/10 flex justify-between">
               <button
                 onClick={handlePrevious}
-                className="text-xs font-bold tracking-wider text-[#84cc16]/60 hover:text-[#84cc16] transition-colors flex items-center gap-2"
-              >
+                className="bg-primary text-on-primary border-black border-3  shadow-[6px_5px_0_0px_rgba(161,216,0)] active:shadow-none active:translate-x-[6px] hover:scale-105
+               font-bold   text-[13px] md:text-base px-6 md:px-5 py-2 md:py-3 tracking-wide duration-200">
                 <span>←</span> PREVIOUS
               </button>
+
+
+              {index === quizQuestions.length-1 && selectedOption && (
+              <button 
+              onClick = {HandleSeeResult}
+              className='bg-primary text-on-primary uppercase  border-black border-3  shadow-[6px_5px_0_0px_rgba(161,216,0)] active:shadow-none active:translate-x-[6px] 
+               hover:scale-105
+               font-bold text-[13px] md:text-base px-6 md:px-5 py-2 md:py-3 tracking-wide duration-200'>
+                See My Results →
+              </button>
+              )}
             </div>
           )}
-        </div>
+          
+       
 
-        {/* Footer note */}
-        <p className="text-center text-[10px] tracking-widest text-[#84cc16]/25 uppercase">
-          SportCareerFinder · Career Diagnostic Quiz
-        </p>
+        
       </div>
     </div>
   );

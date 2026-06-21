@@ -17,7 +17,7 @@ import Scrolltotop from './assets/components/Scrolltotop';
 function App(){
   return(
     <div>
-    <Router>
+    
       <Scrolltotop/>
       <Navbar/>
       <main className='flex-1'>
@@ -34,7 +34,7 @@ function App(){
       </Routes>
       </main>
        <Footer/>
-    </Router>
+
     
     </div>
   );
