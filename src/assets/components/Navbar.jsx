@@ -128,7 +128,7 @@ export default function Navbar() {
 
         {/* MOBILE - Dropdown Menu */}
         {isMenuOpen && (
-            <div className='md:hidden top-24 fixed bg-secondary w-full py-4 px-4 space-y-3 z-100'>
+            <div className='md:hidden top-24 fixed bg-primary w-full py-4 px-4 space-y-3 z-100'>
                 {navLinks.map((link) => (
                     <Link
                         key={link.path}
