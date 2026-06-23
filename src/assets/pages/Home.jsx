@@ -144,7 +144,7 @@ export default function Home() {
        <section className=' min-h-[90vh]'>
         <h1 className='font-judson font-bold  text-5xl md:text-7xl text-[#A1D800] leading-tight p-10'>
           Not Your Typical<br/> Career Quiz</h1>
-          <p className='font-normal p-10 -mt-15 text-[#FFEF78]'>
+          <p className='font-normal p-10 -mt-15 text-secondary'>
             Stop sitting on the bench. Find the sports career you were always meant to play. 
             </p>
         

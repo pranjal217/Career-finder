@@ -47,9 +47,29 @@ const Footer = () => {
       {/* Follow us */}
       <div className='flex flex-row gap-4 text-xl items-center'>
         <span className='text-lg font-semibold'>Follow us:</span>
+        <a
+        href="https://instagram.com/iismworld"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Follow us on instgram">
         <BsInstagram className='hover:text-green-900 cursor-pointer' />
+        </a>
+
+        <a href="twitter_handle"
+        target="_blank"
+        rel="noopener noreferrer"
+      aria-label="Follow us on X">
         <RiTwitterXLine className='hover:text-green-900 cursor-pointer' />
+        </a>
+        <a
+              href="https://wa.me/910000000000"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with us on WhatsApp"
+  >
+            
         <SiWhatsapp className='hover:text-green-900 cursor-pointer' />
+      </a>
       </div>
 
       {/* Copyright */}
