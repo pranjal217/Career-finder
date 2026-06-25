@@ -87,6 +87,7 @@ const HandleSeeResult = () => {
   console.log('button clicked, isAuthenticated:', isAuthenticated);
   if (!isAuthenticated) {
     sessionStorage.setItem('quizScores', JSON.stringify(scores));
+    //window.dispatchEvent(new Event('quizResultChanged'));
     sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
     loginWithRedirect({ appState: { returnTo: '/result' } });
   } else {

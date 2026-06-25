@@ -9,7 +9,7 @@ export default function Navbar() {
     const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [hasresult,setHasResult] = useState(
-        ()=> sessionStorage.getItem('quizscores')!==null
+        ()=> sessionStorage.getItem('quizScores')!==null
 
     );
 
