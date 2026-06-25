@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {RxHamburgerMenu} from "react-icons/rx";
 import {IoCloseOutline} from "react-icons/io5";
@@ -8,9 +8,29 @@ import {IoCloseOutline} from "react-icons/io5";
 export default function Navbar() {
     const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [hasresult,setHasResult] = useState(
+        ()=> sessionStorage.getItem('quizscores')!==null
 
-    const hasResult = sessionStorage.getItem('quizScores') !==null;
-     console.log('isAuthenticated:', isAuthenticated, 'hasResult:', hasResult);
+    );
+
+
+   useEffect(()=>{
+    const checkResult =()=>{
+        setHasResult(sessionStorage.getItem('quizScores')!==null);
+    };
+
+    window.addEventListener('quizResultChanged',checkResult);
+    window.addEventListener('storage',checkResult);
+
+    return()=>{
+        window.removeEventListener('quizResultChanged', checkResult)
+        window.removeEventListener('storage',checkResult);
+
+    }
+
+
+   },[]);
+
 
 
     const handleLogin = () => loginWithRedirect();
@@ -19,6 +39,7 @@ export default function Navbar() {
     const handleLogout = () => {
         sessionStorage.removeItem('quizScores');
         sessionStorage.removeItem('quizAnswers');
+        setHasResult(false);
         logout({ logoutParams: { returnTo: window.location.origin } });
     };
     
