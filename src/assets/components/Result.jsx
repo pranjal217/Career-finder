@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { ShieldAlert, TrendingUp } from 'lucide-react';
 import { archetypesData } from '../../data/questions';
 import { MdOutlineRestartAlt } from "react-icons/md";
@@ -8,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
 export default function Result() {
+  const {user} = useAuth0();
 const location = useLocation();
  const navigate= useNavigate();
   
@@ -207,7 +209,7 @@ const handleRestart=()=>{
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
                 <span className=" uppercase tracking-wide text-sm font-bold text-[#84ff4d]">
-                  YOUR BLUEPRINT
+                  {user?.name ? `${user.name}, YOUR BLUEPRINT`:'Your blueprint'}
                 </span>
               </div>
               <h1 className=" text-accent text-3xl md:text-7xl font-luckiest-guy tracking-wide leading-none mb-4">

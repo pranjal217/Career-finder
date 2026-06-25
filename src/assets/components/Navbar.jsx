@@ -53,7 +53,7 @@ export default function Navbar() {
     { label: 'How it Works', path: '/howitworks' },
     { label: 'Take the Quiz', path: '/quiz' },
     { label: 'Contact', path: '/contact' },
-    ...(isAuthenticated && hasResult ? [{ label: 'Result', path: '/result' }] : []),
+    ...(isAuthenticated && hasresult ? [{ label: 'Result', path: '/result' }] : []),
 ];
 
 
