@@ -87,12 +87,14 @@ const HandleSeeResult = () => {
   console.log('button clicked, isAuthenticated:', isAuthenticated);
   if (!isAuthenticated) {
     sessionStorage.setItem('quizScores', JSON.stringify(scores));
-    //window.dispatchEvent(new Event('quizResultChanged'));
+   
     sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+     window.dispatchEvent(new Event('quizResultChanged'));
     loginWithRedirect({ appState: { returnTo: '/result' } });
   } else {
     sessionStorage.setItem('quizScores', JSON.stringify(scores));
     sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+        window.dispatchEvent(new Event('quizResultChanged'));
     navigate('/result', { state: { scores, answers } });
   }
 };
