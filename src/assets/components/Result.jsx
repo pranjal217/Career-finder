@@ -208,8 +208,8 @@ const handleRestart=()=>{
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
-                <span className=" uppercase tracking-wide text-sm font-bold text-[#84ff4d]">
-                  {user?.name ? `${user.name}, YOUR BLUEPRINT`:'Your blueprint'}
+                <span className=" uppercase tracking-wide text-xl font-bold text-[#84ff4d]">
+                  {user?.name ? `${user.name}, You are`:'You are '}
                 </span>
               </div>
               <h1 className=" text-accent text-3xl md:text-7xl font-luckiest-guy tracking-wide leading-none mb-4">
