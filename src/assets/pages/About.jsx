@@ -70,7 +70,7 @@ const About = () => {
             <img
               src={image}
               alt="telephone"
-              className=' block md:hidden w-32 ml-13  h-auto object-contain'
+              className=' block md:hidden w-40 ml-13  h-auto object-contain'
             />
           </div>
         </div>
