@@ -7,6 +7,10 @@ import  { useRef } from 'react';
 import domtoimage from 'dom-to-image-more';
 import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import jsPDF from 'jspdf';
+import Download from './Download';
+
+
 
 export default function Result() {
   const {user} = useAuth0();
@@ -14,6 +18,11 @@ const location = useLocation();
  const navigate= useNavigate();
   
   const resultRef = useRef(null);
+  const downloadRef = useRef(null);
+  
+
+
+
 
    const scores = location.state?.scores
     ?? JSON.parse(sessionStorage.getItem('quizScores') || '{}');
@@ -35,21 +44,38 @@ if(!scores || Object.keys(scores).length===0){
         </button>
       </div>
   )
-}
+ }
 
 
   // download the pdf
   const handleDownload = async () => {
-  const node = resultRef.current;
-  const blob = await domtoimage.toJpeg(node, {
+  const node = downloadRef.current;
+  const dataUrl = await domtoimage.toPng(node, {
     quality: 0.95,
     bgcolor: '#0D1F0D',
     scale: 2,
   });
-  const link = document.createElement('a');
-  link.download = 'my-sports-career-result.jpg';
-  link.href = blob;
-  link.click();
+// figure ut images actual pixel dimensions
+  const img = new Image();
+  img.src = dataUrl;
+  await new Promise((resolve) => {img.onload = resolve; });
+
+  const imgWidth = img.width;
+  const imgHeight = img.height;
+
+  //create a pdf sized to match the image's aspect ratio
+
+  const pdf = new jsPDF({
+    orientation : imgWidth>imgHeight ? 'landscape':'portrait',
+    unit : 'px',
+    format : [imgWidth,imgHeight],
+  });
+
+  //place the image into the pdf, filling the page 
+  pdf.addImage(dataUrl,'png',0,0,imgWidth,imgHeight);
+  // trigger download 
+  pdf.save('my_sportscareer.pdf');
+
 };
 
 // restart
@@ -193,6 +219,7 @@ const handleRestart=()=>{
   const accent = archetypeAccents[rec.archetypeTitle] || { primary: '#84ff4d', secondary: '#eab308' };
 
   return (
+    <>
     <div ref={resultRef} className="bg-[#101E08] min-h-screen text-white overflow-hidden relative">
 
       {/* checker borders */}
@@ -325,7 +352,16 @@ const handleRestart=()=>{
         </button>
        </div>
       </div>
+       <div
+      ref={downloadRef}
+      style={{ position: 'absolute', top: 0, left: '-9999px' }}
+    >
+      <Download rec={rec} user={user} />
     </div>
+
+    </div>
+    </>
+    
   );
 }
 
